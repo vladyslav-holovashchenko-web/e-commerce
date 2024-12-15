@@ -2,13 +2,107 @@
 <html>
   <head>
     <title>Add Product</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+        color: #343a40;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #007bff;
+      }
+
+      .form-container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #495057;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        background-color: #ffffff;
+        box-sizing: border-box;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      }
+
+      button {
+        background-color: #007bff;
+        color: #ffffff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      a {
+        display: block;
+        margin-top: 20px;
+        text-align: center;
+        text-decoration: none;
+        color: #007bff;
+      }
+
+      a:hover {
+        color: #0056b3;
+      }
+    </style>
   </head>
   <body>
-    <h1>Add a New Product</h1>
-    <form method="post" enctype="multipart/form-data">
-      {% csrf_token %} {{ form.as_p }}
-      <button type="submit">Add Product</button>
-    </form>
-    <a href="{% url 'product_list' %}">Back to Products</a>
+    <div class="form-container">
+      <h1>Add a New Product</h1>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %} {% for field in form %}
+        <div>
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }} {% if field.help_text %}
+          <small style="color: #6c757d">{{ field.help_text }}</small>
+          {% endif %} {% for error in field.errors %}
+          <small style="color: red">{{ error }}</small>
+          {% endfor %}
+        </div>
+        {% endfor %}
+        <button type="submit">Add Product</button>
+      </form>
+      <a href="{% url 'product_list' %}">Back to Products</a>
+    </div>
   </body>
 </html>
