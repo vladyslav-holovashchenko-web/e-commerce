@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Your Cart</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #343a40;
+      }
+      .cart-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+      }
+      th {
+        background-color: #007bff;
+        color: #ffffff;
+      }
+      .total {
+        font-weight: bold;
+        text-align: right;
+      }
+      .btn {
+        text-decoration: none;
+        background-color: #007bff;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+      .btn:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cart-container">
+      <h1>Your Cart</h1>
+      {% if cart_items %}
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart_items %}
+          <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.product.price }}</td>
+            {% comment %}
+            <td>${{ item.product.price|floatformat:2|floatformat:"2"|multiply:item.quantity }}</td>
+            {% endcomment %}
+            <td>
+              <a href="{% url 'update_cart' item.id %}" class="btn">Update</a>
+              <a href="{% url 'remove_from_cart' item.id %}" class="btn">Remove</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p class="total">Total: ${{ total_price }}</p>
+      {% else %}
+      <p>Your cart is empty.</p>
+      {% endif %}
+      <a href="{% url 'product_list' %}" class="btn">Continue Shopping</a>
+    </div>
+  </body>
+</html>
