@@ -70,8 +70,8 @@
             <td>${{ item.product.price|floatformat:2|floatformat:"2"|multiply:item.quantity }}</td>
             {% endcomment %}
             <td>
-              <a href="{% url 'update_cart' item.id %}" class="btn">Update</a>
-              <a href="{% url 'remove_from_cart' item.id %}" class="btn">Remove</a>
+              {% comment %} <a href="{% url 'update_cart' item.id %}" class="btn">Update</a>
+              <a href="{% url 'remove_from_cart' item.id %}" class="btn">Remove</a> {% endcomment %}
             </td>
           </tr>
           {% endfor %}
