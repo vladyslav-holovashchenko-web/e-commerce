@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block title %}Home - My E-Commerce{% endblock %} {% block content %}
+<div class="jumbotron text-center mb-4">
+  <h1 class="display-4">Welcome to My E-Commerce Store!</h1>
+  <p class="lead">Discover amazing products at unbeatable prices.</p>
+  <hr class="my-4" />
+  <a class="btn btn-primary btn-lg" href="#" role="button">Shop Now</a>
+</div>
+
+<div class="row">
+  {% for product in last_added_products %}
+  <div class="col-md-4">
+    <div class="card mb-4">
+      <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}" />
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">${{ product.price }}</p>
+        <a href="#" class="btn btn-success">View Details</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <li>No products added yet.</li>
+  {% endfor %}
+</div>
+{% endblock %}
